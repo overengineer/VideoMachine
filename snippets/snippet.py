@@ -1,4 +1,5 @@
 #!/usr/bin/python3
+import os, tempfile 
 
 class Snippet:
 	def __init__(self, text, lexer=None, style=None):
@@ -8,7 +9,7 @@ class Snippet:
 			lexer = guess_lexer(text)
 		self.lexer = lexer
 		if style == None:
-			from solarized import SolarizedStyle
+			from .solarized import SolarizedStyle
 			style = SolarizedStyle
 		self.style = style
 		

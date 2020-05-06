@@ -1,0 +1,7 @@
+
+
+tempfiles+
+configfile
+caching
+
+ram disk?

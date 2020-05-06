@@ -2,10 +2,7 @@
 
 from bs4 import BeautifulSoup
 from bs4.element import NavigableString
-import sys, traceback, logging
-from snippets.snippet import Snippet
-from moviepy.editor import ImageClip, AudioFileClip, concatenate_audioclips
-from voice.tts import Voice
+from error_handling import handle_parsing_error
 
 def bs4_iterate(soup):
 	node = soup(recursive=False)[0]
@@ -14,19 +11,6 @@ def bs4_iterate(soup):
 		yield node
 		node = sibling
 
-RED, GREEN, YELLOW, BLUE, MAGENTA, CYAN, WHITE = range(31,38)
-END = "\033[0m"
-COLOR = "\033[1;%dm"
-
-def handle_parsing_error(parser, node):	
-	msg = f'''Parsing "{node.name}" in "{parser.soup.name}" failed
-	{COLOR%YELLOW}{node}{END}
-	{COLOR%RED}{traceback.format_exc()}{END}'''
-	if globals().get('STRICT', False):
-		logging.error(msg)
-		sys.exit(-1)
-	else:
-		logging.warning(msg)
 		
 class Parser:
 	def parse(self):
@@ -38,12 +22,13 @@ class Parser:
 				continue
 				
 	def _parse_node(self, node):
-		pass
+		raise NotImplementedError
 
 class Scene(Parser):
 	actions = []
-	def __init__(self, node):
+	def __init__(self, node, parent):
 		assert str(node.name) == 'scene', f'Content {node.name} outside of scene:\n{self}'
+		self.parent = parent
 		self.soup = node
 		self.parse()
 			
@@ -67,76 +52,17 @@ class Playbook(Parser):
 				
 	def _parse_node(self, node):
 		if node and node.name:
-			self.scenes.append(Scene(node))
-
-
-# write a decorater as a classmethod of playbook that register scene classes
-class CodingScene(Scene):
-	clips = []
-	sounds = []
-	images = []
-	hl_lines = []
-	snippet = None
-	
-	def __init__(self, voice=None):
-		self.voice = voice or Voice(octave=5, speed=1.25)
-		
-	def code(self, node):
-		text = str(node.string)
-		self.snippet = Snippet(text)
-		self._push_snippet()
-		assert self.snippet == None, "code tag placed in the scene twice"
-		
-	def _push_snippet(self):
-		image = self.snippet.to_image()
-		self._push_image(image)
-		
-	def _push_sound_file(self, path):
-		sound = AudioFileClip(path)
-		self.sounds.append(sound)
-		
-	def _push_image(self, image):
-		clip = ImageClip(image)
-		self.images.append(image)
-		
-	def _compose_buffer(self):
-		audio = CompositeAudioClip(sounds)
-		video = CompositeVideoClip(images, duration=sound.duration)
-		video.set_audio(audio)
-		clips.append(video)
-		sounds, images = [], []
-		
-	def hl(self, node):
-		lines = [int(s) for s in node.attrs.get('hl_lines', '').split()]
-		# Update Snippet
-		if self.hl_lines != lines:
-			self._compose_buffer()
-			self.hl_lines = lines
-			image = self.snippet.to_image(hl_lines=lines)
-			self._push_image(image)
-		# tts & reset hl
-		if not node.isSelfClosing:
-			text = str(node.string)
-			self.tts(text)
-			self.hl_lines = []
-		
-	def tts(self, txt):
-		path = self.voice.say(txt)
-		self._push_sound_file(path)
-				
-	def wait(self, node):
-		silence = AudioClip(lambda t: 0, duration=node.attrs['sec'])
-		self.sounds.append(silence)
-		
+			self.scenes.append(Scene(node, self))
 		
 if __name__=='__main__':
-	STRICT = True
+	STRICT = False
 	pb = Playbook('playbook.xml')
 	print('\n'.join(['\n'.join([f'''
 {COLOR%YELLOW}<action type="{action.name}">{END}
 {action}
 {COLOR%YELLOW}</action>{END}
 	'''for action in scene.actions]) for scene in pb.scenes]))
+
 	
 	
 
