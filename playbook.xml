@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<playbook name="testing-playbook">
+<scene id="scene-1">
+	<code>
+	#!/usr/bin/python3
+	print('Hello World!')
+	exit()
+	</code>
+	Hi guys. Today I'm gonna show you how to write a simple program in Python.
+	<hl lines="1">
+	The first is a special comment that indicates which executable to be used to run this file.
+	</hl>
+	<hl lines="2">
+	This command writes a string message to the standart output stream. Or simply, it prints "Hello World!".
+	</hl>
+	<wait sec="1"/>
+</scene>
+
+
+<!--
+Timing gonna be complicated...
+ -->

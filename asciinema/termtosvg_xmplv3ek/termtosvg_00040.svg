@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" id="terminal" baseProfile="full" viewBox="0 0 2144 1107" width="2144" version="1.1">
+    <defs>
+        <termtosvg:template_settings xmlns:termtosvg="https://github.com/nbedos/termtosvg">
+            <termtosvg:screen_geometry columns="268" rows="65"/>
+            <termtosvg:animation type="css"/>
+        </termtosvg:template_settings>
+        <style type="text/css" id="generated-style"><![CDATA[#screen {
+                font-family: 'DejaVu Sans Mono', monospace;
+                font-style: normal;
+                font-size: 14px;
+            }
+
+        text {
+            dominant-baseline: text-before-edge;
+            white-space: pre;
+        }
+    ]]></style>
+        <style type="text/css" id="user-style">
+            /* The colors defined below are the default 16 colors used for rendering text of the terminal. Adjust
+               them as needed.
+               ubuntu colors based on https://en.wikipedia.org/wiki/ANSI_escape_code#Colors */
+            .foreground {fill: #e5e5e5;}
+            .background {fill: #010101;}
+            .color0 {fill: #010101;}
+            .color1 {fill: #de382b;}
+            .color2 {fill: #39b54a;}
+            .color3 {fill: #ffc706;}
+            .color4 {fill: #006fb8;}
+            .color5 {fill: #762671;}
+            .color6 {fill: #2cb5e9;}
+            .color7 {fill: #cccccc;}
+            .color8 {fill: #808080;}
+            .color9 {fill: #ff0000;}
+            .color10 {fill: #00ff00;}
+            .color11 {fill: #ffff00;}
+            .color12 {fill: #0000ff;}
+            .color13 {fill: #ff00ff;}
+            .color14 {fill: #00ffff;}
+            .color15 {fill: #ffffff;}
+        </style>
+    </defs>
+    <svg id="screen" width="2144" height="1105" viewBox="0 0 2144 1105" preserveAspectRatio="xMidYMin slice">
+    <rect class="background" height="100%" width="100%" x="0" y="0"/><defs><g id="g1"><text x="0" textLength="2144" class="foreground">                                                                                                                                                                                                                                                                            </text></g><g id="g2"><text x="0" textLength="8" font-weight="bold" class="color14">~</text><text x="8" textLength="8" font-weight="bold" class="foreground"> </text></g><g id="g3"><text x="0" textLength="16" font-weight="bold" class="color10">&#10140; </text><text x="16" textLength="88" class="color2">test-passed</text><text x="104" textLength="2040" class="foreground">                                                                                                                                                                                                                                                               </text></g><g id="g4"><text x="0" textLength="8" fill="#5fff5f"> </text><text x="8" textLength="8" fill="#87ff5f">/</text><text x="16" textLength="72" fill="#87ff00">$$$$$$$$ </text><text x="88" textLength="80" fill="#afff00">/$$$$$$$$ </text><text x="168" textLength="8" fill="#afd700"> </text><text x="176" textLength="88" fill="#d7d700">/$$$$$$  /$</text><text x="264" textLength="8" fill="#d7af00">$</text><text x="272" textLength="72" fill="#ffaf00">$$$$$$   </text><text x="344" textLength="72" fill="#ff8700">    /$$$$</text><text x="416" textLength="8" fill="#ff875f">$</text><text x="424" textLength="88" fill="#ff5f5f">$$   /$$$$$</text><text x="512" textLength="8" fill="#ff5f87">$</text><text x="520" textLength="72" fill="#ff0087">   /$$$$$</text><text x="592" textLength="72" fill="#ff00af">$   /$$$$</text><text x="664" textLength="16" fill="#d700af">$$</text><text x="680" textLength="80" fill="#d700d7">  /$$$$$$$</text><text x="760" textLength="16" fill="#af00d7">$ </text><text x="776" textLength="72" fill="#af00ff">/$$$$$$$ </text></g><g id="g5"><text x="0" textLength="64" fill="#87ff00">|__  $$_</text><text x="64" textLength="80" fill="#afff00">_/| $$____</text><text x="144" textLength="8" fill="#afd700">_</text><text x="152" textLength="88" fill="#d7d700">/ /$$__  $$</text><text x="240" textLength="8" fill="#d7af00">|</text><text x="248" textLength="72" fill="#ffaf00">__  $$__/</text><text x="320" textLength="72" fill="#ff8700">      | $</text><text x="392" textLength="8" fill="#ff875f">$</text><text x="400" textLength="88" fill="#ff5f5f">__  $$ /$$_</text><text x="488" textLength="8" fill="#ff5f87">_</text><text x="496" textLength="72" fill="#ff0087">  $$ /$$_</text><text x="568" textLength="72" fill="#ff00af">_  $$ /$$</text><text x="640" textLength="16" fill="#d700af">__</text><text x="656" textLength="80" fill="#d700d7">  $$| $$__</text><text x="736" textLength="16" fill="#af00d7">__</text><text x="752" textLength="72" fill="#af00ff">_/| $$__ </text><text x="824" textLength="24" fill="#8700ff"> $$</text></g><g id="g6"><text x="0" textLength="40" fill="#87ff00">   | </text><text x="40" textLength="80" fill="#afff00">$$   | $$ </text><text x="120" textLength="8" fill="#afd700"> </text><text x="128" textLength="88" fill="#d7d700">    | $$  \</text><text x="216" textLength="8" fill="#d7af00">_</text><text x="224" textLength="72" fill="#ffaf00">_/   | $$</text><text x="296" textLength="72" fill="#ff8700">         </text><text x="368" textLength="8" fill="#ff875f">|</text><text x="376" textLength="88" fill="#ff5f5f"> $$  \ $$| </text><text x="464" textLength="8" fill="#ff5f87">$</text><text x="472" textLength="72" fill="#ff0087">$  \ $$| </text><text x="544" textLength="72" fill="#ff00af">$$  \__/|</text><text x="616" textLength="16" fill="#d700af"> $</text><text x="632" textLength="80" fill="#d700d7">$  \__/| $</text><text x="712" textLength="16" fill="#af00d7">$ </text><text x="728" textLength="72" fill="#af00ff">     | $$</text><text x="800" textLength="48" fill="#8700ff">  \ $$</text></g><g id="g7"><text x="0" textLength="16" fill="#87ff00">  </text><text x="16" textLength="80" fill="#afff00"> | $$   | </text><text x="96" textLength="8" fill="#afd700">$</text><text x="104" textLength="88" fill="#d7d700">$$$$   |  $</text><text x="192" textLength="8" fill="#d7af00">$</text><text x="200" textLength="72" fill="#ffaf00">$$$$    |</text><text x="272" textLength="72" fill="#ff8700"> $$      </text><text x="344" textLength="8" fill="#ff875f"> </text><text x="352" textLength="88" fill="#ff5f5f">  | $$$$$$$</text><text x="440" textLength="8" fill="#ff5f87">/</text><text x="448" textLength="72" fill="#ff0087">| $$$$$$$</text><text x="520" textLength="72" fill="#ff00af">$|  $$$$$</text><text x="592" textLength="16" fill="#d700af">$ </text><text x="608" textLength="80" fill="#d700d7">|  $$$$$$ </text><text x="688" textLength="16" fill="#af00d7">| </text><text x="704" textLength="72" fill="#af00ff">$$$$$   |</text><text x="776" textLength="72" fill="#8700ff"> $$  | $$</text></g><g id="g8"><text x="0" textLength="72" fill="#afff00">   | $$  </text><text x="72" textLength="8" fill="#afd700"> </text><text x="80" textLength="88" fill="#d7d700">| $$__/    </text><text x="168" textLength="8" fill="#d7af00">\</text><text x="176" textLength="72" fill="#ffaf00">____  $$ </text><text x="248" textLength="72" fill="#ff8700">  | $$   </text><text x="320" textLength="8" fill="#ff875f"> </text><text x="328" textLength="88" fill="#ff5f5f">     | $$__</text><text x="416" textLength="8" fill="#ff5f87">_</text><text x="424" textLength="72" fill="#ff0087">_/ | $$__</text><text x="496" textLength="72" fill="#ff00af">  $$ \___</text><text x="568" textLength="16" fill="#d700af">_ </text><text x="584" textLength="80" fill="#d700d7"> $$ \____ </text><text x="664" textLength="16" fill="#af00d7"> $</text><text x="680" textLength="72" fill="#af00ff">$| $$__/ </text><text x="752" textLength="72" fill="#8700ff">  | $$  |</text><text x="824" textLength="8" fill="#875fff"> </text><text x="832" textLength="16" fill="#5f5fff">$$</text></g><g id="g9"><text x="0" textLength="40" fill="#87ff00">   | </text><text x="40" textLength="80" fill="#afff00">$$   | $$ </text><text x="120" textLength="8" fill="#afd700"> </text><text x="128" textLength="88" fill="#d7d700">     /$$  \</text><text x="216" textLength="8" fill="#d7af00"> </text><text x="224" textLength="72" fill="#ffaf00">$$   | $$</text><text x="296" textLength="72" fill="#ff8700">         </text><text x="368" textLength="8" fill="#ff875f">|</text><text x="376" textLength="88" fill="#ff5f5f"> $$      | </text><text x="464" textLength="8" fill="#ff5f87">$</text><text x="472" textLength="8" fill="#ff0087">$</text></g></defs><g><use xlink:href="#g1" y="0"/><use xlink:href="#g2" y="17"/><use xlink:href="#g3" y="34"/><use xlink:href="#g4" y="68"/><use xlink:href="#g5" y="85"/><use xlink:href="#g6" y="102"/><use xlink:href="#g7" y="119"/><use xlink:href="#g8" y="136"/><use xlink:href="#g9" y="153"/></g></svg>
+</svg>

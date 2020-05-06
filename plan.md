@@ -1,0 +1,25 @@
+
+- parse markup
+- render TTS tracks
+	- render in batches
+	- generate timestamps 
+- render snippets
+	- highlight lines if neeeded
+- render asciicast animation
+	- cast2svg
+	- svg2png
+- port-processing TTS tracks
+	- change pitch
+	- correct speed
+	- filter maybe
+- compose animations
+	- backgound
+	- intro & outro
+	- transitions
+	- sfx
+- generate subtitles
+- compose final video
+	- animation
+	- TTS
+	- subtitles
+- publish
