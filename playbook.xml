@@ -16,7 +16,7 @@
 
 	<wait sec="0.5"/>
 	<hl lines="2">
-	In the second line, we are calling a function named print, which writes a message to standart output stream.
+	In the second line, we are calling a function named print, which writes a message to the standart output stream.
 	</hl>
 
 	<wait sec="0.5"/>

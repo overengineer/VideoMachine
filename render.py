@@ -2,10 +2,11 @@
 from snippets.snippet import Snippet
 from moviepy.editor import (ImageClip, AudioFileClip, AudioClip, 
 				CompositeVideoClip, concatenate_audioclips, concatenate_videoclips)
-from voice.tts import Voice
+from voice.tts import *
 from error_handling import handle_render_not_implemented_error, handle_node_error
-import tempfile, re, time
+import tempfile, re, time, os, sys
 
+# TODO: carry this mechanism to Voice class
 def combine_parts(parts, n=100):
 	parts.reverse()
 	while True:
@@ -50,7 +51,7 @@ class CodingSceneRender(SceneRender):
 	snippet = None
 	
 	def __init__(self, *args, voice=None, temp_dir=None, **kwargs):
-		self.voice = voice or Voice(octaves=0, speed=1)#-0.28, speed=1.15)
+		self.voice = voice or FliteVoice()#-0.28, speed=1.15)
 		if not temp_dir:
 			temp_dir = tempfile.mkdtemp()	
 		self.temp_dir = temp_dir
@@ -98,7 +99,8 @@ class CodingSceneRender(SceneRender):
 	def tts(self, node):
 		txt = str(node.string).strip()
 		if txt:
-			if len(txt)>100:
+			# TODO: FIX THIS LINE
+			if self.voice.__class__.__name__=='GttsVoice' and len(txt)>100:
 				parts = re.split(r'[\.!?:,]', txt)
 				for s in combine_parts(parts):
 					time.sleep(0.5)
@@ -117,15 +119,31 @@ class CodingSceneRender(SceneRender):
 	def _render(self):	
 		super()._render()
 		self._compose_buffer()
+		
+# PLAYBOOK RENDER CLASS
 			
 if __name__=='__main__':
+	from datetime import datetime
 	from parse import Playbook
 	STRICT = False
-	pb = Playbook('playbook.xml')
+
+	def echo(s):
+		RED, GREEN, YELLOW, BLUE, MAGENTA, CYAN, WHITE = range(31,38)
+		END = "\033[0m"
+		COLOR = "\033[1;%dm"
+		print(f"""{COLOR%GREEN}{datetime.now().strftime('%H:%M:%S')}{END} {COLOR%MAGENTA}{s}{END}
+		""")
+	echo("PARSING")
+	pb_path = sys.argv[1]
+	pb = Playbook(pb_path)
+	echo("RENDERING")
 
 	render = CodingSceneRender(pb.scenes[0])
+	echo("COMPOSING")
 	print(render.clips)
 	final_video = concatenate_videoclips(render.clips)
-	final_video.write_videofile('final.mp4', fps=30)
+	echo("WRITING")
+	final_video.write_videofile(os.path.basename(pb_path)+".mp4", fps=30)
+	echo("FINISH")
 	
 		

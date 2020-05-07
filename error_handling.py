@@ -14,11 +14,10 @@ def handle_error(msg):
 	else:
 		logging.warning(msg)
 		
-def handle_node_error(node, msg):
-	msg_template = f'''%s
+def handle_node_error(node, message):
+	msg = f'''{message}
 	{COLOR%YELLOW}{node}{END}
 	{COLOR%RED}{traceback.format_exc()}{END}'''
-	msg = msg_template % msg
 	handle_error(msg)
 	
 def handle_parsing_error(parser, node):	

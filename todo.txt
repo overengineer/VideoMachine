@@ -1,8 +1,9 @@
 
-UNTRACK GITIGNORE
+fix gtts parts
+write playbook render class
+header n xml overrides config or attrs in scene 
 
 tempfiles+
 configfile
 caching
 
-ram disk?

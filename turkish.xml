@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<playbook name="testing-playbook">
+<scene id="scene-1">
+	<code>
+	#!/usr/bin/python3
+	print('Hello World!')
+	exit()
+	</code>
+	Merhaba arkadaşlar. Bugün size "Python"da nasıl basit bir program yazılacağını göstereceğim.
+
+	<wait sec="0.5"/>
+	
+	<hl lines="1">
+	İlk satır, Hangi uygulama tarafından bu dosyanın çalıştılabileceğini gösteren özel bir yorum bloğudur.
+	</hl>
+
+	<wait sec="0.5"/>
+	<hl lines="2">
+	İkinci satırad, bir mesajı standart çıkışa yazan 'print' adında bir program çağırıyoruz. 
+
+	</hl>
+
+	<wait sec="0.5"/>
+	<hl lines="3">
+	Exit fonksiyonu programı sonlandırır. Kodunuzun sonunda bunu çağırmak zorunda değilsiniz. Ama işlemin ortasında programı sonlandırmak gerektiğinde kullanışlı olabilir.
+	</hl>
+
+	<wait sec="0.5"/>
+	
+	
+</scene>
+
+
+<!--
+Timing gonna be complicated...
+ -->
