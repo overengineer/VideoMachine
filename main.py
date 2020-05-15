@@ -32,7 +32,7 @@ def main():
 	from datetime import datetime
 	error_handling.STRICT = False
 	logger = setup_loggers("DEBUG")
-	pb_path = sys.argv[1]
+	pb_path = os.path.realpath(os.path.expanduser(sys.argv[1]))
 	from parse import PlaybookParser
 	pb = PlaybookParser(pb_path)
 	logger.info("RENDERING")

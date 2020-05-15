@@ -8,7 +8,7 @@ import tempfile, re, time, os, shutil, itertools
 import logging
 logger = logging.getLogger('lib')
 
-class SceneRender:
+class Scene:
 	clips = []
 	def __init__(self, scene):
 		self.scene = scene
@@ -34,7 +34,7 @@ class SceneRender:
 				msg = f'Rendering action "{node.name}" failed.'
 				handle_node_error(node, msg)			
 
-class CodingSceneRender(SceneRender):
+class CodingScene(Scene):
 	clips = []
 	sounds = []
 	images = []
@@ -105,7 +105,7 @@ def render_playbook(pb):
 	clips = []
 	for scene in pb.scenes:
 		# TODO: scene subclasses
-		render = CodingSceneRender(scene=scene)
+		render = globals()[scene.class_name](scene=scene)
 		logger.debug(render.clips)
 		clips.append(render.clips)
 	# flatten list

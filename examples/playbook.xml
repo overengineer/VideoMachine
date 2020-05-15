@@ -1,17 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<playbook class="CodingScene" voice="FliteVoice" lang="en">
+<playbook class_name="CodingScene" voice="GttsVoice" lang="en">
 <scene>
 	<code>
 	#!/usr/bin/python3
 	print('Hello World!')
-	exit()
 	</code>
 	Hi guys. Today I'm gonna show you how to write a simple program in Python.
 	
 	<wait sec="0.5"/>
 	
 	<hl lines="1">
-	The first line is a special comment that, indicates which executable to be used, to run this file.
+	The first line is a special comment that, indicates path to the Python executable.
 	</hl>
 
 	<wait sec="0.5"/>
@@ -20,11 +19,5 @@
 	</hl>
 
 	<wait sec="0.5"/>
-	<hl lines="3">
-	Exit function terminates program. You dont have to call it at the end of your code. But it can be usefull when you need to finish the execution in the middle of the process.
-	</hl>
-
-	<wait sec="0.5"/>
-
 </scene>
 

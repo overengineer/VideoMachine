@@ -1,4 +1,6 @@
 
+argparse
+
 #write playbook render class
 #header n xml overrides config or attrs in scene
 default wait etc.
