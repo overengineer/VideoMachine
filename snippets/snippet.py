@@ -1,12 +1,18 @@
 #!/usr/bin/python3
 import os, tempfile 
+import logging
+logger = logging.getLogger('lib')
 
 class Snippet:
-	def __init__(self, text, lexer=None, style=None):
+	def __init__(self, text, lexer=None, style=None, lang=''):
 		self.text = text
 		if lexer == None:
-			from pygments.lexers import guess_lexer
-			lexer = guess_lexer(text)
+			from pygments import lexers
+			if lang:
+				lexer = lexers.get_lexer_by_name(lang)
+			else:
+				lexer = lexers.guess_lexer(text)
+		logger.debug(lexer)
 		self.lexer = lexer
 		if style == None:
 			from .solarized import SolarizedStyle

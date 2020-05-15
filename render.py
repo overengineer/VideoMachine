@@ -1,9 +1,12 @@
 #!/usr/bin/python3
-from snippets.snippet import Snippet
 from moviepy.editor import (ImageClip, AudioFileClip, AudioClip, 
 				CompositeVideoClip, concatenate_audioclips, concatenate_videoclips)
+#import moviepy.video.fx.all as vfx
+
+from snippets.snippet import Snippet
 from voice.tts import *
 from error_handling import handle_render_not_implemented_error, handle_node_error
+
 import tempfile, re, time, os, shutil, itertools
 import logging
 logger = logging.getLogger('lib')
@@ -43,12 +46,20 @@ class CodingScene(Scene):
 	
 	def __init__(self, scene):
 		self.voice = scene.voice
+		self.w = int(scene.w)
+		self.h = int(scene.h)
 		super().__init__(scene)
 		
 	def _push_snippet(self):
 		_, img_path = tempfile.mkstemp(suffix='.png', dir=self.temp_dir)
 		logger.debug(img_path)
-		self.snippet.to_image(out_path=img_path, hl_lines=self.hl_lines)
+		lines = self.snippet.text.split('\n')
+		offset = 20
+		font_size_h = (self.h-offset)/len(lines)
+		font_size_w = (self.w-offset)/max([len(s) for s in lines])
+		font_size = min(font_size_w, font_size_h) 
+		font_size = min(font_size, 128)
+		self.snippet.to_image(out_path=img_path, hl_lines=self.hl_lines, font_size=font_size)
 		self._push_image(img_path)
 		
 	def _push_sound_file(self, path):
@@ -56,12 +67,14 @@ class CodingScene(Scene):
 		self.sounds.append(sound)
 		
 	def _push_image(self, image):
-		clip = ImageClip(image)
+		clip = ImageClip(image).set_position('center')#.fx(vfx.resize, width=self.w)
+
 		self.images.append(clip)
 		
 	def _compose_buffer(self):
 		audio = concatenate_audioclips(self.sounds)
-		video = CompositeVideoClip(self.images).set_duration(audio.duration)
+		video = CompositeVideoClip(self.images, 
+			size=(self.w, self.h)).set_duration(audio.duration)
 		video = video.set_audio(audio)
 		self.clips.append(video)
 		self.sounds, self.images = [], []
@@ -73,7 +86,7 @@ class CodingScene(Scene):
 	def code(self, node):
 		assert self.snippet == None, "code tag placed in the scene twice"
 		text = str(node.string)
-		self.snippet = Snippet(text)
+		self.snippet = Snippet(text, lang=node.attrs.get('lang',''))
 		self._push_snippet()
 				
 	def hl(self, node):

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<playbook class_name="CodingScene" voice="GttsVoice" lang="en">
+<playbook class_name="CodingScene" voice="GttsVoice" lang="en" w="1920" h="1080">
 <scene>
-	<code>
+	<code lang="python">
 	#!/usr/bin/python3
 	print('Hello World!')
 	</code>
