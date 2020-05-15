@@ -1,5 +1,5 @@
 
-Video dimensions!!!
+Path to TTS executables
 
 argparse
 
