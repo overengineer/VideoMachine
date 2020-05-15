@@ -1,10 +1,10 @@
 
-- parse markup
-- render TTS tracks
-	- render in batches
+- parse markup+
+- render TTS tracks+
+	- render in batches+
 	- generate timestamps 
-- render snippets
-	- highlight lines if neeeded
+- render snippets+
+	- highlight lines if neeeded+
 - render asciicast animation
 	- cast2svg
 	- svg2png

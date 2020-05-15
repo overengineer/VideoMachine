@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<playbook name="testing-playbook">
-<scene id="scene-1">
+<playbook class="CodingScene" voice="FliteVoice" lang="en">
+<scene>
 	<code>
 	#!/usr/bin/python3
 	print('Hello World!')
@@ -25,11 +25,6 @@
 	</hl>
 
 	<wait sec="0.5"/>
-	
-	
+
 </scene>
 
-
-<!--
-Timing gonna be complicated...
- -->

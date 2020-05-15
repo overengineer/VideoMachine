@@ -1,54 +1,77 @@
 #!/usr/bin/python3
 
-import os, sys, tempfile, time, subprocess
+import os, sys, shutil, tempfile, time, subprocess, shlex, re
+import logging
+logger = logging.getLogger('lib')
 
 class Voice:
-	def __init__(self, temp_dir=None):
-		if not temp_dir:
-			temp_dir = tempfile.mkdtemp()
-		self.temp_dir = temp_dir
+	def __init__(self, **kwargs):
+		self.temp_dir = tempfile.mkdtemp()
+		
+	def __del__(self):
+		if self.temp_dir:
+			shutil.rmtree(self.temp_dir)
 		
 	def say(self, txt):
 		pass
 		
-		
-# TODO: add path to executables
-		
+
 class FliteVoice(Voice):
-	def __init__(self, voice='rms', duration_stretch=0.8, int_f0_target_mean=120, **kwargs):
+	def __init__(self, exec_path='flite', voice='rms', duration_stretch: float=0.9, int_f0_target_mean: int=120, **kwargs):
 		super().__init__(**kwargs)
 		self.voice = voice
 		self.d = duration_stretch
 		self.f0 = int_f0_target_mean
+		self.exec_path = exec_path
 		
 	def say(self, txt):
 		_, path = tempfile.mkstemp(suffix='.wav', dir=self.temp_dir) 
-		subprocess.call(["flite", 
+		subprocess.call([self.exec_path, 
 		"--setf", f"int_f0_target_mean={self.f0}",
 		"--setf", f"duration_stretch={self.d}",
-		"-voice", self.voice,
-		"-t", txt,  
-		"-o", path])
-		return path
+		"-voice", shlex.quote(self.voice),
+		"-t", shlex.quote(txt),  
+		"-o", shlex.quote(path)])
+		return [path]
 		
 class EspeakNgVoice(Voice):
-	def __init__(self, lang='en', pitch=50, speed=175, k=0, **kwargs):
+	def __init__(self, exec_path='espeak-ng', lang='en', pitch: int = 50, speed: int = 175, k: int = 0, **kwargs):
 		super().__init__(**kwargs)	
 		self.lang = lang
 		self.pitch = pitch
 		self.speed = speed
 		self.k = k
+		self.exec_path = exec_path
 		
 	def say(self, txt):
 		_, path = tempfile.mkstemp(suffix='.wav', dir=self.temp_dir) 
-		subprocess.call(["espeak-ng", 
+		subprocess.call([self.exec_path, 
 		f"-v{self.lang}",
 		f"-k{self.k}",
 		f"-s{self.speed}",
 		f"-p{self.pitch}", 
-		txt, 
-		"-w", path])
-		return path
+		shlex.quote(txt), 
+		"-w", shlex.quote(path)])
+		return [path]
+
+
+def combine_parts(parts, n=100):
+	parts.reverse()
+	while True:
+		if not parts:	
+			break
+		p = parts.pop().strip() 
+		if not parts:
+			if p:	
+				yield p
+			break
+		q = parts.pop().strip() 
+		if len(p)+len(q) <= 100:
+			p = p + ', ' + q
+			parts.append(p)
+		elif p:
+			yield p
+			parts.append(q)
 
 class GttsVoice(Voice):
 	def __init__(self, octaves=0, speed=1, lang='en', **kwargs):
@@ -63,26 +86,36 @@ class GttsVoice(Voice):
 
 	def say(self, txt):
 		import gtts
-		assert len(txt)<=100, "Too long text"
 		#source_filename = f"{hash(txt)}-{self.lang}"
 		#source_filepath = os.path.join(self.temp_dir, source_filename + ".mp3")
-		_, source_filepath = tempfile.mkstemp(suffix='.mp3', dir=self.temp_dir) 
 		i = 0	
-		while True:
-			try:
-				voice = gtts.gTTS(txt, lang=self.lang)
-				break
-			except:	
-				i += 1		
-				print('Retry: ', i)
-				time.sleep(1)
-		voice.save(source_filepath)
+		paths = []
+		if len(txt)>100:
+			parts = re.split(r'[\.!?:,]', txt)
+			for s in combine_parts(parts):
+				_, path = tempfile.mkstemp(suffix='.mp3', dir=self.temp_dir) 
+				time.sleep(0.5)
+				while True:
+					try:
+						voice = gtts.gTTS(s, lang=self.lang)
+						break
+					except:	
+						i += 1		
+						logger.info('Retry: ', i)
+						time.sleep(1)
+				voice.save(path)
+				paths.append(path)
+		else:
+			_, path = tempfile.mkstemp(suffix='.mp3', dir=self.temp_dir) 
+			voice = gtts.gTTS(txt, lang=self.lang)
+			voice.save(path)
+			paths.append(path)
 		#sampled_filename = f"tmp_{source_filename}{self.oct_str}.wav"
 		#sampled_filepath = os.path.join(self.temp_dir, sampled_filename)
 
-		return self.change_pitch(source_filepath)
+		return paths #self.change_pitch(source_filepath)
 
-
+	# BAD QUALITY PITCH SHIFT, NOT RECOMMENDED
 	def change_pitch(self, source_filepath):
 		import pydub
 		from audiotsm.io.wav import WavReader, WavWriter

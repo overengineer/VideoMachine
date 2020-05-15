@@ -4,8 +4,13 @@
 *.mp3
 *.wav
 *.png
+*.jpg
 *.svg
+*.gif
 *.cast
+stats/
+tmp/
+garbage/
 
 *.git/
 

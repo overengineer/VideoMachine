@@ -1,21 +1,22 @@
 #!/usr/bin/python3
 import sys, traceback, logging
+logger = logging.getLogger('lib')
 
 RED, GREEN, YELLOW, BLUE, MAGENTA, CYAN, WHITE = range(31,38)
 END = "\033[0m"
 COLOR = "\033[1;%dm"
 
-
+STRICT = False
 
 def handle_error(msg):
 	if globals().get('STRICT', False):
-		logging.error(msg)
+		logger.error(msg)
 		sys.exit(-1)
 	else:
-		logging.warning(msg)
+		logger.warning(msg)
 		
 def handle_node_error(node, message):
-	msg = f'''{message}
+	msg = f'''\n{message}
 	{COLOR%YELLOW}{node}{END}
 	{COLOR%RED}{traceback.format_exc()}{END}'''
 	handle_error(msg)

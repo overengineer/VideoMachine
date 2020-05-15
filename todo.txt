@@ -1,9 +1,15 @@
 
-fix gtts parts
-write playbook render class
-header n xml overrides config or attrs in scene 
+#write playbook render class
+#header n xml overrides config or attrs in scene
+default wait etc.
 
-tempfiles+
-configfile
-caching
+#configfile
 
+https://github.com/asciinema/asciicast2gif
+
+IDEAS
+
+vapory
+
+Scrape online docs
+ - doctest module
