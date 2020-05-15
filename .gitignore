@@ -8,7 +8,7 @@
 *.svg
 *.gif
 *.cast
-stats/
+stats
 tmp/
 garbage/
 !docs/*
