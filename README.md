@@ -9,13 +9,40 @@ Now only generates silly TTS coding tutorials.
 
 ## Installation
 
-Clone this repo. Not added `setup.py` yet
+```
+git clone https://github.com/overengineer/VideoMachine.git
+cd VideoMachine
+pip3 install -r requirements.txt
+```
+
+## Dependencies
+
+You should have installed one of TTS tools below to generate TTS tracks. 
+- flite
+- espeak-ng
+- gTTS
+
+Alternatively, you can write TTS wrapper for other TTS engines/APIs. See [extending](#extending).
 
 ## Usage
 
 ```
 python3 main.py path/to/playbook.xml
 ```
+
+## Playbook Syntax
+
+`playbook`s consist of scenes. `scene`s contains actions (e.g. `<code>` tag for code snippets). `class_name` of scenes can be placed as `class_name` attribute either in each scenes or playbook for default class. `class_name` attribute should match name of `render.Scene` subclass.
+
+### Sytnax for `CodingScene` class scenes
+
+For determining which TTS engine to use, you should add `voice` attribute matching name of `voice.tts.Voice` subclass. 
+
+Text elements inside `scene` tags are wrapped with `tts` tags on rendering phase. You can either write TTS scripts as text element of inside `tts` tags. 
+
+`hl` tags causes renderer to render snippet with certain lines highlighted, then call TTS engine.
+
+`wait` tags inserts silence for given seconds.
 
 ## Extending
 
