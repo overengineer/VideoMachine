@@ -30,7 +30,7 @@ def setup_loggers(level):
 	
 def main():
 	from datetime import datetime
-	error_handling.STRICT = False
+	error_handling.STRICT = True
 	logger = setup_loggers("DEBUG")
 	pb_path = os.path.realpath(os.path.expanduser(sys.argv[1]))
 	from parse import PlaybookParser

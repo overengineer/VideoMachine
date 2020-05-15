@@ -5,6 +5,7 @@ from moviepy.editor import (ImageClip, AudioFileClip, AudioClip,
 
 from snippets.snippet import Snippet
 from voice.tts import *
+from utils import *
 from error_handling import handle_render_not_implemented_error, handle_node_error
 
 import tempfile, re, time, os, shutil, itertools
@@ -35,7 +36,8 @@ class Scene:
 				handle_render_not_implemented_error(self, node)
 			except:
 				msg = f'Rendering action "{node.name}" failed.'
-				handle_node_error(node, msg)			
+				handle_node_error(node, msg)	
+
 
 class CodingScene(Scene):
 	clips = []
@@ -85,7 +87,7 @@ class CodingScene(Scene):
 		
 	def code(self, node):
 		assert self.snippet == None, "code tag placed in the scene twice"
-		text = str(node.string)
+		text = deindent(node.decode_contents())
 		self.snippet = Snippet(text, lang=node.attrs.get('lang',''))
 		self._push_snippet()
 				
@@ -102,7 +104,7 @@ class CodingScene(Scene):
 			self.hl_lines = []
 		
 	def tts(self, node):
-		txt = str(node.string).strip()
+		txt = node.decode_contents().strip()
 		if txt:
 			paths = self.voice.say(txt)
 			for path in paths:
@@ -117,7 +119,6 @@ class CodingScene(Scene):
 def render_playbook(pb):
 	clips = []
 	for scene in pb.scenes:
-		# TODO: scene subclasses
 		render = globals()[scene.class_name](scene=scene)
 		logger.debug(render.clips)
 		clips.append(render.clips)

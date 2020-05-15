@@ -5,7 +5,7 @@ Generate videos from simple XML playbooks.
 
 This project uses moviepy module. This is a work in progress. Intended to be an extensible library/framework-like thing. 
 Now only generates silly TTS coding tutorials.
-Example output: [https://youtu.be/VKi5sNB40yA]
+Example output: https://youtu.be/VKi5sNB40yA
 
 
 ## Installation

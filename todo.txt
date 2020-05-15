@@ -1,10 +1,11 @@
 
-Path to TTS executables
+image, audio, video tags
+new TTS engines:
+- mimic1
+- julius
 
 argparse
 
-#write playbook render class
-#header n xml overrides config or attrs in scene
 default wait etc.
 
 #configfile
