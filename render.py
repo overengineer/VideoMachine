@@ -45,12 +45,16 @@ class CodingScene(Scene):
 	images = []
 	hl_lines = []
 	snippet = None
+	background_image = 'assets/matrix.jpg'
 	
 	def __init__(self, scene):
 		self.voice = scene.voice
 		self.w = int(scene.w)
 		self.h = int(scene.h)
+		self._push_image(self.background_image)
 		super().__init__(scene)
+		if self.images or self.sounds:
+			self._compose_buffer()
 		
 	def _push_snippet(self):
 		_, img_path = tempfile.mkstemp(suffix='.png', dir=self.temp_dir)
@@ -75,6 +79,7 @@ class CodingScene(Scene):
 		
 	def _compose_buffer(self):
 		audio = concatenate_audioclips(self.sounds)
+		assert self.images, self.scene.soup
 		video = CompositeVideoClip(self.images, 
 			size=(self.w, self.h)).set_duration(audio.duration)
 		video = video.set_audio(audio)
@@ -92,39 +97,54 @@ class CodingScene(Scene):
 		self._push_snippet()
 				
 	def hl(self, node):
+		# lines Empty by default
 		lines = [int(s) for s in node.attrs.get('lines', '').split()]
+		if not lines:
+			if lines := self.hl_lines: # Dont change if empty
+				lines = [int(lines[0])+1] # Next line
 		# Update Snippet
 		if self.hl_lines != lines:
 			self._compose_buffer()
 			self.hl_lines = lines
 			self._push_snippet()
 		# tts & reset hl
+		self.tts(node)
 		if not node.isSelfClosing:
-			self.tts(node)
 			self.hl_lines = []
 		
 	def tts(self, node):
-		txt = node.decode_contents().strip()
-		if txt:
-			paths = self.voice.say(txt)
+		voice = self.voice
+		if voice_attr := node.attrs.pop('class', None):
+			if voice_class := globals().get(voice_attr, None):
+				voice = voice_class(**node.attrs)
+		if txt := node.decode_contents().strip():
+			paths = voice.say(txt)
 			for path in paths:
 				self._push_sound_file(path)
 				logger.debug(path)
+		if node.isSelfClosing:
+			self.voice = voice
 				
 	def wait(self, node):
-		silence = AudioClip(lambda t: (0,0), duration=float(node.attrs['sec'])).set_start(0)
+		silence = AudioClip(lambda t: (0,0), 
+			duration=float(node.attrs.get('sec', 0.5))).set_start(0)
 		self.sounds.append(silence)
 
-		
+
 def render_playbook(pb):
 	clips = []
+	import json
+	#print(json.dumps([[str(action)for action in scene.actions] for scene in pb.scenes],indent=4))
+	
 	for scene in pb.scenes:
+		print(scene.soup)
+		print(scene.actions)
 		render = globals()[scene.class_name](scene=scene)
-		logger.debug(render.clips)
-		clips.append(render.clips)
-	# flatten list
-	clips = list(itertools.chain.from_iterable(clips))
+		print(render.clips)
+		print('========================================')
+		clips += render.clips
+	print(clips)
 	clip = concatenate_videoclips(clips)
-	return clip
+	return clips[0]
 		
 	

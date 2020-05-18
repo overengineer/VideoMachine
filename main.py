@@ -42,8 +42,12 @@ def main():
 	logger.info("FINISH")
 	
 		
-if __name__=='__main__':
+def profiling():
 	import profile, pstats
 	profile.run('main()', 'stats')
 	p = pstats.Stats('stats')
 	p.sort_stats(pstats.SortKey.TIME, pstats.SortKey.CUMULATIVE).print_stats(20)
+	
+
+if __name__=='__main__':
+	main()

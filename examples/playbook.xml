@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<playbook class_name="CodingScene" voice="GttsVoice" lang="en" w="1920" h="1080">
+<playbook class_name="CodingScene" w="1920" h="1080">
+<tts class="FliteVoice" voice="vox/cmu_us_aew.flitevox"/>
 <scene>
 	<code lang="python">
 	#!/usr/bin/python3

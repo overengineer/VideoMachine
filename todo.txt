@@ -1,8 +1,16 @@
 
+
+XML2JSON
+
+more test
+multiple playbooks
+
+more assertions
+
 image, audio, video tags
-new TTS engines:
-- mimic1
-- julius
+- PlaybookParser tag handlers
+
+TESTS
 
 argparse
 
