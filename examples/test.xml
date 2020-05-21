@@ -1,8 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <playbook class_name="CodingScene" voice="FliteVoice" lang="en" w="1920" h="1080">
 
+
+<!-- testing empty scene -->
 <scene>
+</scene>
+
+<scene>
+	<tts>
 	Testing background image
+	</tts>
 	<wait sec="1"/>
 </scene>
 
@@ -14,19 +21,19 @@
 	</code>
 	
 	<wait sec="0.5"/>
-	<hl>
+	<tts>
 	no highlight.
-	</hl>
+	</tts>
 	
 	<wait sec="0.5"/>
-	<hl lines='1'>
+	<tts lines='1'>
 	highlight first line.
-	</hl>
+	</tts>
 	
 	<wait sec="0.5"/>
-	<hl>
+	<tts>
 	highlight next.
-	</hl>
+	</tts>
 	
 	<wait sec="0.5"/>
 </scene>
@@ -45,11 +52,21 @@
 	print('Tesing default wait')
 	</code>
 	
+	<tts>
 	Testing
+	</tts>
 	<wait/>
+	
+	<tts>
 	default
+	
+	</tts>
 	<wait/>
+	
+	<tts>
 	wait
+	
+	</tts>
 	<wait/>
 </scene>
 
@@ -140,8 +157,11 @@
 	print('test8')
 	print('Testing to override default voice')
 	</code>
+	
+	<tts>
 	This should be E-speak
 	
+	</tts>
 	<wait/>
 </scene>
 

@@ -7,22 +7,6 @@ from voice.tts import *
 import logging
 logger = logging.getLogger('lib')
 
-def scene_iterate(soup):
-	"""
-	>>> list(scene_iterate(BeautifulSoup('<a><b>1</b><b>2</b></a><c>3</c>').a))
-	[<b>1</b>, <b>2</b>]	
-	"""
-	node = soup(recursive=False)[0]
-	while node != None:
-		assert node.parent == soup
-		#print(node)
-		#print('*'*50)
-		if node.name == 'scene':
-			break
-		yield node
-		sibling = node.nextSibling
-		node = sibling
-
 class Parser:	
 	def _try_parse_node(self, node):
 		try:
@@ -46,7 +30,10 @@ class Parser:
 		raise NotImplementedError
 		
 	def parse(self):
-		pass
+		for node in self.soup.findChildren(recursive=False):
+			print(node)
+			print('-'*50)
+			self._try_parse_node(node)
 
   
 class SceneParser(Parser):
@@ -61,23 +48,13 @@ class SceneParser(Parser):
 		self.parse()
 			
 	def _parse_node(self, node):
-		assert node.parent == self.soup #DEBUG
-		if type(node) == NavigableString and str(node.string).strip():
-			node.insert_before(BeautifulSoup(f'<tts>{node.string}</tts>','lxml-xml'))
-			node = node.previousSibling	
 		if node.name:
 			self.actions.append(node)
 			
-	def parse(self):
-		#print(self.actions)	
-		for node in scene_iterate(self.soup):
-			self._try_parse_node(node)
-		#print(self.actions)
-			
 class PlaybookParser(Parser):
-	scenes = []
-	actions = []
 	def __init__(self, path):
+		self.scenes = []
+		self.actions = []
 		self.path = path
 		self.load(path)
 		self.load_attrs()
@@ -88,16 +65,10 @@ class PlaybookParser(Parser):
 			self.soup = BeautifulSoup(fp.read(), 'lxml-xml').playbook
 				
 	def _parse_node(self, node):
-		if node and node.name == 'scene':
+		if node and node.name == 'scene' and node(recursive=False):
 			self.scenes.append(SceneParser(node, self))
 		else:
 			self.actions.append(node)
-		
-	def parse(self):
-		for node in self.soup.findChildren(recursive=False):
-			#print('>'*50)
-			#print(node)
-			self._try_parse_node(node)
 		
 if __name__=='__main__':
 	STRICT = False

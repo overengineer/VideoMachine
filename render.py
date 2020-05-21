@@ -8,35 +8,38 @@ from voice.tts import *
 from utils import *
 from error_handling import handle_render_not_implemented_error, handle_node_error
 
-import tempfile, re, time, os, shutil, itertools
+import tempfile, re, time, os, shutil, itertools, atexit, copy
 import logging
 logger = logging.getLogger('lib')
 
 class Scene:
-	clips = []
-	def __init__(self, scene, write=True):
+	def __init__(self, scene, write=False):
+		self.clips = []
 		self.scene = scene
 		self.temp_dir = tempfile.mkdtemp()	
 		self._render()
 		if write:
+			assert self.clips
 			clip = concatenate_videoclips(self.clips)
 			_, self.path = tempfile.mkstemp(suffix='.mp4', dir=os.path.realpath('.'))
-			clip.write_videofile(self.path, fps=30)			
+			clip.write_videofile(self.path, fps=30)	
+			self.clips = [VideoFileClip(self.path)]		
+			atexit.register(os.remove, self.path)
 		
 	def __del__(self):
-		if self.temp_dir:
+		try:
 			shutil.rmtree(self.temp_dir)
+		except:
+			pass
 		
 	def _get_tag_method(self, name):
 		assert re.match("^[a-z]+$", name), "Unsafe XML tag: "+name
 		return self.__class__.__dict__[name]
 	
 	def _render(self):
-		print(self.scene.actions)
 		for node in self.scene.actions:
 			try:
 				logger.debug(node)
-				print(node)
 				self._get_tag_method(node.name)(self, node)
 			except NotImplementedError:
 				handle_render_not_implemented_error(self, node)
@@ -47,20 +50,24 @@ class Scene:
 
 
 class CodingScene(Scene):
-	clips = []
-	sounds = []
-	images = []
-	hl_lines = []
-	snippet = None
-	background_image = 'assets/matrix.jpg'
 	
 	def __init__(self, scene):
+		self.clips, self.sounds, self.images = [], [], []
+		self.hl_lines = []
+		self.snippet = None
+		self.background_image = 'assets/matrix.jpg'
 		self.voice = scene.voice
 		self.w = int(scene.w)
 		self.h = int(scene.h)
 		self._push_image(self.background_image)
+		assert self.clips == []
 		super().__init__(scene)
-		if self.images or self.sounds:
+		
+	def _render(self):
+		super()._render()
+		assert self.sounds #DEBUG
+		if self.sounds:
+			assert self.images #DEBUG
 			self._compose_buffer()
 		
 	def _push_snippet(self):
@@ -86,24 +93,20 @@ class CodingScene(Scene):
 		
 	def _compose_buffer(self):
 		audio = concatenate_audioclips(self.sounds)
-		assert self.images, self.scene.soup
 		video = CompositeVideoClip(self.images, 
 			size=(self.w, self.h)).set_duration(audio.duration)
 		video = video.set_audio(audio)
 		self.clips.append(video)
 		self.sounds, self.images = [], []
-		
-	def _render(self):	
-		super()._render()
-		self._compose_buffer()
-		
+		self._push_image(self.background_image)
+
 	def code(self, node):
 		assert self.snippet == None, "code tag placed in the scene twice"
 		text = deindent(node.decode_contents())
 		self.snippet = Snippet(text, lang=node.attrs.get('lang',''))
 		self._push_snippet()
 				
-	def hl(self, node):
+	def tts(self, node):
 		# lines Empty by default
 		lines = [int(s) for s in node.attrs.get('lines', '').split()]
 		if not lines:
@@ -114,12 +117,6 @@ class CodingScene(Scene):
 			self._compose_buffer()
 			self.hl_lines = lines
 			self._push_snippet()
-		# tts & reset hl
-		self.tts(node)
-		if not node.isSelfClosing:
-			self.hl_lines = []
-		
-	def tts(self, node):
 		voice = self.voice
 		if voice_attr := node.attrs.pop('class', None):
 			if voice_class := globals().get(voice_attr, None):
@@ -131,7 +128,9 @@ class CodingScene(Scene):
 				logger.debug(path)
 		if node.isSelfClosing:
 			self.voice = voice
-				
+		else:
+			self.hl_lines = []
+		
 	def wait(self, node):
 		silence = AudioClip(lambda t: (0,0), 
 			duration=float(node.attrs.get('sec', 0.5))).set_start(0)
@@ -139,19 +138,13 @@ class CodingScene(Scene):
 
 
 def render_playbook(pb):
-	clips = []
-	import json
-	#print(json.dumps([[str(action)for action in scene.actions] for scene in pb.scenes],indent=4))
-	
+	clips = []	
 	for scene in pb.scenes:
-		#print(scene.soup)
-		#print(scene.actions)
 		render = globals()[scene.class_name](scene=scene)
 		print(render.clips)
-		print('========================================')
-		clips += [VideoFileClip(render.path).resize(height=int(pb.h))]
+		print('='*50)
+		clips += render.clips
 		
-	print(clips)
 	clip = concatenate_videoclips(clips)
 	return clip
 		

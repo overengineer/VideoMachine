@@ -1,5 +1,6 @@
 #!/usr/bin/python3
 
+from collections import OrderedDict
 						
 def count_prefix(line, prefix):
 	for i, c in enumerate(line):
@@ -19,3 +20,11 @@ def deindent(text):
 	lines = [remove_prefix(line, '\t', n) for line in lines]
 	text = '\n'.join(lines)
 	return text
+	
+
+def get_attrs(dic):
+	return OrderedDict(((k,v) for k,v in dic.items() if k.startswith("@")))
+
+def get_children(dic):
+	return OrderedDict(((k,v) for k,v in dic.items() if not k.startswith("@")))
+
