@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-from moviepy.editor import (ImageClip, AudioFileClip, AudioClip, 
+from moviepy.editor import (ImageClip, AudioFileClip, AudioClip, VideoFileClip,
 				CompositeVideoClip, concatenate_audioclips, concatenate_videoclips)
 #import moviepy.video.fx.all as vfx
 
@@ -14,10 +14,14 @@ logger = logging.getLogger('lib')
 
 class Scene:
 	clips = []
-	def __init__(self, scene):
+	def __init__(self, scene, write=True):
 		self.scene = scene
 		self.temp_dir = tempfile.mkdtemp()	
 		self._render()
+		if write:
+			clip = concatenate_videoclips(self.clips)
+			_, self.path = tempfile.mkstemp(suffix='.mp4', dir=os.path.realpath('.'))
+			clip.write_videofile(self.path, fps=30)			
 		
 	def __del__(self):
 		if self.temp_dir:
@@ -28,15 +32,18 @@ class Scene:
 		return self.__class__.__dict__[name]
 	
 	def _render(self):
+		print(self.scene.actions)
 		for node in self.scene.actions:
 			try:
 				logger.debug(node)
+				print(node)
 				self._get_tag_method(node.name)(self, node)
 			except NotImplementedError:
 				handle_render_not_implemented_error(self, node)
 			except:
 				msg = f'Rendering action "{node.name}" failed.'
-				handle_node_error(node, msg)	
+				handle_node_error(node, msg)
+				
 
 
 class CodingScene(Scene):
@@ -73,7 +80,7 @@ class CodingScene(Scene):
 		self.sounds.append(sound)
 		
 	def _push_image(self, image):
-		clip = ImageClip(image).set_position('center')#.fx(vfx.resize, width=self.w)
+		clip = ImageClip(image).set_position('center')
 
 		self.images.append(clip)
 		
@@ -137,14 +144,15 @@ def render_playbook(pb):
 	#print(json.dumps([[str(action)for action in scene.actions] for scene in pb.scenes],indent=4))
 	
 	for scene in pb.scenes:
-		print(scene.soup)
-		print(scene.actions)
+		#print(scene.soup)
+		#print(scene.actions)
 		render = globals()[scene.class_name](scene=scene)
 		print(render.clips)
 		print('========================================')
-		clips += render.clips
+		clips += [VideoFileClip(render.path).resize(height=int(pb.h))]
+		
 	print(clips)
 	clip = concatenate_videoclips(clips)
-	return clips[0]
+	return clip
 		
 	

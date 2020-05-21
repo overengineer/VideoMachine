@@ -7,6 +7,10 @@ This project uses moviepy module. This is a work in progress. Intended to be an 
 Now only generates silly TTS coding tutorials.
 Example output: https://youtu.be/VKi5sNB40yA
 
+##  Status
+
+Fails
+
 
 ## Installation
 
