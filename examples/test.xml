@@ -6,7 +6,6 @@
 <scene>
 </scene>
 
-<!--
 <scene>
 	<tts>
 	Testing background image
@@ -127,7 +126,6 @@
 	<wait/>
 </scene>
 
--->
 <scene>
 	<code lang='python'>
 	print('test6')
@@ -147,7 +145,6 @@
 	<wait/>
 </scene>
 
-<!--
 <scene>
 	<code lang='python'>
 	print('test7')
@@ -175,24 +172,16 @@
 	<wait/>
 </scene>
 
-<tts/>
+<tts voice="GttsVoice"/>
 
-<scene>
-	<code lang='python'>
-	print('test8')
-	print('Testing to return default voice')
-	</code>
-	This should be F-lite
-	<wait/>
-</scene>
 
 <code lang='python'>
-print('test9')
+print('test8')
 print('Testing to set default code')
 </code>
 
 <scene>
-	Here is Test 9
+	<tts>Here is Test 9</tss>
 	<wait/>
 </scene>
 
