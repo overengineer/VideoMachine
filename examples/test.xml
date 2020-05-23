@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <playbook class_name="CodingScene" w="1920" h="1080">
-<tts voice="FliteVoice" lang="en"/>
+<tts class="FliteVoice" lang="en"/>
 
 <!-- testing empty scene -->
 <scene>
@@ -71,24 +71,23 @@
 	</tts>
 	<wait/>
 </scene>
--->
 <scene>
 	<code lang='python'>
 	print('test4')
 	print('Tesing voices')
 	</code>
 	
-	<tts voice="EspeakNgVoice">
+	<tts class="EspeakNgVoice">
 	Testing e-speak-ng
 	</tts>
 	<wait/>
 	
-	<tts voice="FliteVoice">
+	<tts class="FliteVoice">
 	Testing F-lite
 	</tts>
 	<wait/>
 	
-	<tts voice="GttsVoice">
+	<tts class="GttsVoice">
 	Testing GTTS
 	</tts>
 	<wait/>
@@ -98,7 +97,7 @@
 	</tts>
 	<wait/>
 
-	<tts voice="EspeakNgVoice"/>
+	<tts class="EspeakNgVoice"/>
 	<tts>
 	Tesing TTS self closing tag with e-speak-ng
 	</tts>
@@ -107,54 +106,55 @@
 	<wait/>
 </scene>
 
-<!--
 <scene>
 	<code lang='python'>
 	print('test5')
 	print('Testing EspeakVoice attributes')
 	</code>
 	
-	<tts voice="EspeakNgVoice" pitch="100">
+	<tts class="EspeakNgVoice" pitch="100">
 	Testing
-	</tts>	
-	<tts voice="EspeakNgVoice" speed="100">
+	</tts>
+	<tts class="EspeakNgVoice" speed="100">
 	e-speak-ng
-	</tts>	
-	<tts voice="EspeakNgVoice" k="20">
+	</tts>
+	<tts class="EspeakNgVoice" k="20">
 	attributes
-	</tts>	
-	<tts voice="EspeakNgVoice" lang="tr">
+	</tts>
+	<tts class="EspeakNgVoice" lang="tr">
 	E-speak-ng Türkçe
-	</tts>	
+	</tts>
 	<wait/>
 </scene>
 
+-->
 <scene>
 	<code lang='python'>
 	print('test6')
 	print('Testing FliteVoice attributes')
 	</code>
-	<tts voice="FliteVoice" duration_stretch="0.7">
+	<tts class="FliteVoice" duration_stretch="0.7">
 	Testing F-lite
 	</tts>
 	
-	<tts voice="FliteVoice" int_f0_target_mean="130">
+	<tts class="FliteVoice" int_f0_target_mean="130">
 	F-lite
 	</tts>
 	
-	<tts voice="FliteVoice" voice="vox/cmu_us_aew.flitevox">
+	<tts class="FliteVoice" voice="vox/cmu_us_ahw.flitevox">
 	attributes
 	</tts>
 	<wait/>
 </scene>
 
+<!--
 <scene>
 	<code lang='python'>
 	print('test7')
 	print('Testing GttsVoice attributes')
 	</code>
 	
-	<tts voice="GttsVoice" lang="tr">
+	<tts class="GttsVoice" lang="tr">
 	GTTS Türkçe 
 	</tts>	
 	<wait/>
