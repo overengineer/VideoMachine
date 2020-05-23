@@ -14,14 +14,14 @@ class Parser:
 		except:
 			handle_parsing_error(self, node)
 				
-	def load_attrs(self, attrs=None):
+	def load_attrs(self, attrs=None, override=False):
 		if attrs == None:
 			attrs = self.soup.attrs
 			assert attrs
 			logger.debug(attrs)
 		for k, v in attrs.items():
 			logger.debug((k,v))
-			if k in self.__dict__.keys():
+			if k in self.__dict__.keys() and not override:
 				logger.warning(f'Unsafe XML attribute {k}="{v}"')
 			else:
 				self.__dict__[k] = v
@@ -41,10 +41,10 @@ class SceneParser(Parser):
 		assert str(node.name) == 'scene', f'Content {node.name} outside of scene:\n{self}'
 		self.parent = parent
 		self.soup = node
-		attrs = {**parent.soup.attrs, **node.attrs}
-		self.load_attrs(attrs=attrs)
 		self.voice = GttsVoice(lang='en-uk') # DEFAULT
-		self.actions = []
+		attrs = {**parent.soup.attrs, **node.attrs}
+		self.load_attrs(attrs=attrs, override=True)
+		self.actions = parent.actions
 		self.parse()
 			
 	def _parse_node(self, node):
@@ -65,8 +65,9 @@ class PlaybookParser(Parser):
 			self.soup = BeautifulSoup(fp.read(), 'lxml-xml').playbook
 				
 	def _parse_node(self, node):
-		if node and node.name == 'scene' and node(recursive=False):
-			self.scenes.append(SceneParser(node, self))
+		if node.name == 'scene':
+			if node(recursive=False):
+				self.scenes.append(SceneParser(node, self))
 		else:
 			self.actions.append(node)
 		

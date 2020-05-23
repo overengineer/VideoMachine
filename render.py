@@ -46,8 +46,6 @@ class Scene:
 			except:
 				msg = f'Rendering action "{node.name}" failed.'
 				handle_node_error(node, msg)
-				
-
 
 class CodingScene(Scene):
 	
@@ -114,8 +112,9 @@ class CodingScene(Scene):
 			self.hl_lines = lines
 			self._push_snippet()
 
+		print(self.voice)
 		voice = self.voice
-		if voice_attr := node.attrs.pop('class', None):
+		if voice_attr := node.attrs.pop('voice', None):
 			if voice_class := globals().get(voice_attr, None):
 				voice = voice_class(**node.attrs)
 		if txt := node.decode_contents().strip():
@@ -124,6 +123,7 @@ class CodingScene(Scene):
 				self._push_sound_file(path)
 				logger.debug(path)
 		if node.isSelfClosing:
+			print('***', node, voice, self.voice)
 			self.voice = voice
 		
 	def wait(self, node, sec=None):

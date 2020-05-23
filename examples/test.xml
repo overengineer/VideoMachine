@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<playbook class_name="CodingScene" voice="FliteVoice" lang="en" w="1920" h="1080">
-
+<playbook class_name="CodingScene" w="1920" h="1080">
+<tts voice="FliteVoice" lang="en"/>
 
 <!-- testing empty scene -->
 <scene>
 </scene>
 
+<!--
 <scene>
 	<tts>
 	Testing background image
@@ -70,52 +71,59 @@
 	</tts>
 	<wait/>
 </scene>
-
-<!--
+-->
 <scene>
 	<code lang='python'>
 	print('test4')
 	print('Tesing voices')
 	</code>
 	
-	<tts class="EspeakNgVoice">
+	<tts voice="EspeakNgVoice">
 	Testing e-speak-ng
 	</tts>
+	<wait/>
 	
-	<tts class="FliteVoice">
+	<tts voice="FliteVoice">
 	Testing F-lite
 	</tts>
+	<wait/>
 	
-	<tts class="GttsVoice">
+	<tts voice="GttsVoice">
 	Testing GTTS
 	</tts>
-	
-	<tts class="EspeakNgVoice"/>
-	Tesing TTS self closing tag with e-speak-ng
-	
+	<wait/>
+
 	<tts>
 	Testing default voice
 	</tts>
+	<wait/>
+
+	<tts voice="EspeakNgVoice"/>
+	<tts>
+	Tesing TTS self closing tag with e-speak-ng
+	</tts>
+
 	
 	<wait/>
 </scene>
 
+<!--
 <scene>
 	<code lang='python'>
 	print('test5')
 	print('Testing EspeakVoice attributes')
 	</code>
 	
-	<tts class="EspeakNgVoice" pitch="100">
+	<tts voice="EspeakNgVoice" pitch="100">
 	Testing
 	</tts>	
-	<tts class="EspeakNgVoice" speed="100">
+	<tts voice="EspeakNgVoice" speed="100">
 	e-speak-ng
 	</tts>	
-	<tts class="EspeakNgVoice" k="20">
+	<tts voice="EspeakNgVoice" k="20">
 	attributes
 	</tts>	
-	<tts class="EspeakNgVoice" lang="tr">
+	<tts voice="EspeakNgVoice" lang="tr">
 	E-speak-ng Türkçe
 	</tts>	
 	<wait/>
@@ -126,15 +134,15 @@
 	print('test6')
 	print('Testing FliteVoice attributes')
 	</code>
-	<tts class="FliteVoice" duration_stretch="0.7">
+	<tts voice="FliteVoice" duration_stretch="0.7">
 	Testing F-lite
 	</tts>
 	
-	<tts class="FliteVoice" int_f0_target_mean="130">
+	<tts voice="FliteVoice" int_f0_target_mean="130">
 	F-lite
 	</tts>
 	
-	<tts class="FliteVoice" voice="vox/cmu_us_aew.flitevox">
+	<tts voice="FliteVoice" voice="vox/cmu_us_aew.flitevox">
 	attributes
 	</tts>
 	<wait/>
@@ -146,13 +154,13 @@
 	print('Testing GttsVoice attributes')
 	</code>
 	
-	<tts class="GttsVoice" lang="tr">
+	<tts voice="GttsVoice" lang="tr">
 	GTTS Türkçe 
 	</tts>	
 	<wait/>
 </scene>
 
-<tts class="EspeakVoice"/>
+<tts voice="EspeakVoice"/>
 
 <scene>
 	<code lang='python'>

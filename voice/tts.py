@@ -18,7 +18,7 @@ class Voice:
 
 
 class FliteVoice(Voice):
-	def __init__(self, exec_path='flite', voice='rms', 
+	def __init__(self, exec_path='flite', voice='rms', lang='en',
 			duration_stretch: float = 0.9, int_f0_target_mean: int = 110):
 		super().__init__()
 		self.voice = voice
