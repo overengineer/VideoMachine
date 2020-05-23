@@ -40,6 +40,7 @@
 
 <scene>
 	<code>
+	#!/usr/bin/python3
 	print('test2')
 	print('testing code lang auto detect')
 	</code>

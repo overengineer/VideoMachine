@@ -65,7 +65,8 @@ class CodingScene(Scene):
 		
 	def _render(self):
 		super()._render()
-		assert self.sounds #DEBUG
+		if not self.sounds:
+			self.wait(None, sec=1) #TODO: parametrize
 		if self.sounds:
 			assert self.images #DEBUG
 			self._compose_buffer()
@@ -127,9 +128,9 @@ class CodingScene(Scene):
 		if node.isSelfClosing:
 			self.voice = voice
 		
-	def wait(self, node):
+	def wait(self, node, sec=None):
 		silence = AudioClip(lambda t: (0,0), 
-			duration=float(node.attrs.get('sec', 0.5))).set_start(0)
+			duration = sec or float(node.attrs.get('sec', 0.5))).set_start(0)
 		self.sounds.append(silence)
 
 
