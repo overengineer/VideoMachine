@@ -5,7 +5,7 @@ from moviepy.editor import (ImageClip, AudioFileClip, AudioClip, VideoFileClip,
 
 from snippets.snippet import Snippet
 from voice.tts import *
-from utils import *
+from utils import deindent
 from error_handling import handle_render_not_implemented_error, handle_node_error
 
 import tempfile, re, time, os, shutil, itertools, atexit, copy
@@ -107,16 +107,14 @@ class CodingScene(Scene):
 		self._push_snippet()
 				
 	def tts(self, node):
-		# lines Empty by default
 		lines = [int(s) for s in node.attrs.get('lines', '').split()]
-		if not lines:
-			if lines := self.hl_lines: # Dont change if empty
-				lines = [int(lines[0])+1] # Next line
-		# Update Snippet
 		if self.hl_lines != lines:
+			# Update Snippet
+			print(self.hl_lines, lines)
 			self._compose_buffer()
 			self.hl_lines = lines
 			self._push_snippet()
+
 		voice = self.voice
 		if voice_attr := node.attrs.pop('class', None):
 			if voice_class := globals().get(voice_attr, None):
@@ -128,8 +126,6 @@ class CodingScene(Scene):
 				logger.debug(path)
 		if node.isSelfClosing:
 			self.voice = voice
-		else:
-			self.hl_lines = []
 		
 	def wait(self, node):
 		silence = AudioClip(lambda t: (0,0), 

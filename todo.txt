@@ -1,20 +1,15 @@
 
-
-MOVIEPY BUGS?
-
+refactor
 more test
-multiple playbooks
-
 more assertions
+
+default wait etc.
 
 image, audio, video tags
 - PlaybookParser tag handlers
 
-TESTS
-
 argparse
 
-default wait etc.
 
 #configfile
 

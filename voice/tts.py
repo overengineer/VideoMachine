@@ -18,7 +18,8 @@ class Voice:
 
 
 class FliteVoice(Voice):
-	def __init__(self, exec_path='flite', voice='rms', duration_stretch: float=0.9, int_f0_target_mean: int=110):
+	def __init__(self, exec_path='flite', voice='rms', 
+			duration_stretch: float = 0.9, int_f0_target_mean: int = 110):
 		super().__init__()
 		self.voice = voice
 		self.d = duration_stretch
@@ -37,7 +38,8 @@ class FliteVoice(Voice):
 		
 
 class EspeakNgVoice(Voice):
-	def __init__(self, exec_path='espeak-ng', lang='en', pitch: int = 50, speed: int = 175, k: int = 0):
+	def __init__(self, exec_path='espeak-ng', lang='en', 
+			pitch: int = 50, speed: int = 175, k: int = 0):
 		super().__init__()	
 		self.lang = lang
 		self.pitch = pitch

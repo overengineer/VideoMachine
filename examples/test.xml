@@ -32,7 +32,7 @@
 	
 	<wait sec="0.5"/>
 	<tts>
-	highlight next.
+	no highlight again
 	</tts>
 	
 	<wait sec="0.5"/>
