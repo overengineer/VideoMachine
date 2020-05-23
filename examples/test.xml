@@ -38,7 +38,6 @@
 	<wait sec="0.5"/>
 </scene>
 
-<!--
 <scene>
 	<code>
 	print('test2')
@@ -70,6 +69,7 @@
 	<wait/>
 </scene>
 
+<!--
 <scene>
 	<code lang='python'>
 	print('test4')
