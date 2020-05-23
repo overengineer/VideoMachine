@@ -47,7 +47,6 @@
 	</code>
 </scene>
 
-<!--
 <scene>
 	<code lang='python'>
 	print('test3')
@@ -72,6 +71,7 @@
 	<wait/>
 </scene>
 
+<!--
 <scene>
 	<code lang='python'>
 	print('test4')
