@@ -65,10 +65,10 @@ class CodingScene(Scene):
 		
 	def _render(self):
 		super()._render()
-		assert self.sounds #DEBUG
-		if self.sounds:
-			assert self.images #DEBUG
-			self._compose_buffer()
+		if not self.sounds:
+			self.wait(None, sec=1) #TODO: parametrize
+		assert self.images #DEBUG
+		self._compose_buffer()
 		
 	def _push_snippet(self):
 		_, img_path = tempfile.mkstemp(suffix='.png', dir=self.temp_dir)
@@ -110,7 +110,6 @@ class CodingScene(Scene):
 		lines = [int(s) for s in node.attrs.get('lines', '').split()]
 		if self.hl_lines != lines:
 			# Update Snippet
-			print(self.hl_lines, lines)
 			self._compose_buffer()
 			self.hl_lines = lines
 			self._push_snippet()
@@ -127,9 +126,9 @@ class CodingScene(Scene):
 		if node.isSelfClosing:
 			self.voice = voice
 		
-	def wait(self, node):
+	def wait(self, node, sec=None):
 		silence = AudioClip(lambda t: (0,0), 
-			duration=float(node.attrs.get('sec', 0.5))).set_start(0)
+			duration = sec or float(node.attrs.get('sec', 0.5))).set_start(0)
 		self.sounds.append(silence)
 
 

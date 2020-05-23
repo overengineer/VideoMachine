@@ -38,14 +38,15 @@
 	<wait sec="0.5"/>
 </scene>
 
-<!--
 <scene>
 	<code>
 	print('test2')
 	print('testing code lang auto detect')
+	print('testing default length of scene')
 	</code>
 </scene>
 
+<!--
 <scene>
 	<code lang='python'>
 	print('test3')
