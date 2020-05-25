@@ -71,15 +71,15 @@ class CodingScene(Scene):
 			assert self.images #DEBUG
 			self._compose_buffer()
 		
-	def _push_snippet(self):
+	def _push_snippet(self): #TODO: fix font_size
 		_, img_path = tempfile.mkstemp(suffix='.png', dir=self.temp_dir)
 		logger.debug(img_path)
 		lines = self.snippet.text.split('\n')
-		offset = 20
+		offset = 0
 		font_size_h = (self.h-offset)/len(lines)
 		font_size_w = (self.w-offset)/max([len(s) for s in lines])
-		font_size = min(font_size_w, font_size_h) 
-		font_size = min(font_size, 128)
+		font_size = min(font_size_w, font_size_h)
+		font_size = min(max(font_size, 32), 128)
 		self.snippet.to_image(out_path=img_path, hl_lines=self.hl_lines, font_size=font_size)
 		self._push_image(img_path)
 		
@@ -102,12 +102,20 @@ class CodingScene(Scene):
 		self._push_image(self.background_image)
 
 	def code(self, node):
+		import html
 		assert self.snippet == None, "code tag placed in the scene twice"
 		text = deindent(node.decode_contents())
+		try:
+			escape = bool(node.attrs.get('escape', True))
+		except:
+			escape = True
+		if escape:
+			text = html.unescape(text)
 		self.snippet = Snippet(text, lang=node.attrs.get('lang',''))
 		self._push_snippet()
 				
 	def tts(self, node):
+		print(self.voice)
 		lines = [int(s) for s in node.attrs.get('lines', '').split()]
 		if self.hl_lines != lines:
 			# Update Snippet

@@ -44,7 +44,7 @@ class SceneParser(Parser):
 		attrs = {**parent.soup.attrs, **node.attrs}
 		self.load_attrs(attrs=attrs)
 		self.voice = GttsVoice(lang='en-uk') # DEFAULT
-		self.actions = []
+		self.actions = [] #parent.actions #TODO: try copy()/deepcopy()
 		self.parse()
 			
 	def _parse_node(self, node):
@@ -65,8 +65,9 @@ class PlaybookParser(Parser):
 			self.soup = BeautifulSoup(fp.read(), 'lxml-xml').playbook
 				
 	def _parse_node(self, node):
-		if node and node.name == 'scene' and node(recursive=False):
-			self.scenes.append(SceneParser(node, self))
+		if node.name == 'scene':
+			if node(recursive=False):
+				self.scenes.append(SceneParser(node, self))
 		else:
 			self.actions.append(node)
 		

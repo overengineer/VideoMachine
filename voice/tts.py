@@ -18,8 +18,8 @@ class Voice:
 
 
 class FliteVoice(Voice):
-	def __init__(self, exec_path='flite', voice='rms', 
-			duration_stretch: float = 0.9, int_f0_target_mean: int = 110):
+	def __init__(self, exec_path='flite', voice='rms', lang='en',
+			duration_stretch: float = 0.9, int_f0_target_mean: int = 110, **kwargs):
 		super().__init__()
 		self.voice = voice
 		self.d = duration_stretch
@@ -39,7 +39,7 @@ class FliteVoice(Voice):
 
 class EspeakNgVoice(Voice):
 	def __init__(self, exec_path='espeak-ng', lang='en', 
-			pitch: int = 50, speed: int = 175, k: int = 0):
+			pitch: int = 50, speed: int = 175, k: int = 0, **kwargs):
 		super().__init__()	
 		self.lang = lang
 		self.pitch = pitch
@@ -78,7 +78,7 @@ def combine_parts(parts, n=100):
 			parts.append(q)
 
 class GttsVoice(Voice):
-	def __init__(self, octaves=0, speed=1, lang='en-uk'):
+	def __init__(self, octaves=0, speed=1, lang='en-uk', **kwargs):
 		super().__init__()
 		self.lang = lang
 		self.octaves = octaves

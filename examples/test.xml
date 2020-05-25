@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<playbook class_name="CodingScene" voice="FliteVoice" lang="en" w="1920" h="1080">
-
+<playbook class_name="CodingScene" w="1920" h="1080">
+<!--<tts class="FliteVoice" lang="en"/>-->
 
 <!-- testing empty scene -->
 <scene>
@@ -70,7 +70,6 @@
 	<wait/>
 </scene>
 
-<!--
 <scene>
 	<code lang='python'>
 	print('test4')
@@ -81,6 +80,7 @@
 	Testing e-speak-ng
 	</tts>
 	
+	
 	<tts class="FliteVoice">
 	Testing F-lite
 	</tts>
@@ -89,11 +89,13 @@
 	Testing GTTS
 	</tts>
 	
-	<tts class="EspeakNgVoice"/>
-	Tesing TTS self closing tag with e-speak-ng
-	
 	<tts>
 	Testing default voice
+	</tts>
+	
+	<tts class="EspeakNgVoice"/>
+	<tts>
+	Tesing TTS self closing tag with e-speak-ng
 	</tts>
 	
 	<wait/>
@@ -148,42 +150,6 @@
 	<tts class="GttsVoice" lang="tr">
 	GTTS Türkçe 
 	</tts>	
-	<wait/>
-</scene>
-
-<tts class="EspeakVoice"/>
-
-<scene>
-	<code lang='python'>
-	print('test8')
-	print('Testing to override default voice')
-	</code>
-	
-	<tts>
-	This should be E-speak
-	
-	</tts>
-	<wait/>
-</scene>
-
-<tts/>
-
-<scene>
-	<code lang='python'>
-	print('test8')
-	print('Testing to return default voice')
-	</code>
-	This should be F-lite
-	<wait/>
-</scene>
-
-<code lang='python'>
-print('test9')
-print('Testing to set default code')
-</code>
-
-<scene>
-	Here is Test 9
 	<wait/>
 </scene>
 
