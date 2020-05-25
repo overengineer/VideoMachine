@@ -37,19 +37,29 @@ python3 main.py path/to/playbook.xml
 
 ## Playbook Syntax
 
-`playbook`s consist of scenes. `scene`s contains actions (e.g. `<code>` tag for code snippets). `class_name` of scenes can be placed as `class_name` attribute either in each scenes or playbook for default class. `class_name` attribute should match name of `render.Scene` subclass. 'w', 'h' attributes represent width and height of the video.
+`playbook`s consist of scenes. `scene`s contains actions (e.g. `<code>` tag for code snippets). 
+tags may have attributes. This attributes override some default settings.
 
-### Sytnax for `CodingScene` class scenes
+### Playbook Attributes
 
-For determining which TTS engine to use, you should add `voice` attribute matching name of `voice.tts.Voice` subclass. This may be set globally by placing in `<playbook>` tag.
+`class_name` : it globally sets default `class_name` for `scene` instances. (e.g. `CodingScene`)
+`w`, `h`: width & height of the canvas
 
-`<code>` tag may have attribute `lang` which represents alias for pygments 
+### `CodingScene` class
 
-Text elements inside `scene` tags are wrapped with `tts` tags on rendering phase. You can either write TTS scripts as text element of inside `tts` tags. 
+This class is the build-in example sub-class of the `Scene` class.
+It can be used to render coding tutorials.
 
-`hl` tags causes renderer to render snippet with certain lines highlighted, then call TTS engine.
+#### `CodingScene`: supported action tags & their attributes
 
-`wait` tags inserts silence for given seconds.
+- `code`: Renders syntax highlighted code snippets using Pygments.
+	- `lang`: Programming language. ("python", "java" etc.)
+	- `escape`: Allow HTML escape sequences. (set "true" when `<![CDATA` used.) 
+- `tts`: Generates text-to-speech. Self closing tags overrides default voice.
+	- `voice`: Name of TTS class. Look (voice/tts.py)
+	- `lang`: Language of the text.
+	- ... : Each TTS class have their own special attributes.
+- `wait`: insert silence for the given seconds. (or default). This tag should be self closing.
 
 ## Extending
 
