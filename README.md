@@ -56,7 +56,7 @@ It can be used to render coding tutorials.
 	- `lang`: Programming language. ("python", "java" etc.)
 	- `escape`: Allow HTML escape sequences. (set "true" when `<![CDATA` used.) 
 - `tts`: Generates text-to-speech. Self closing tags overrides default voice.
-	- `voice`: Name of TTS class. Look (voice/tts.py)
+	- `voice`: Name of TTS class. Look [voice/tts.py]
 	- `lang`: Language of the text.
 	- ... : Each TTS class have their own special attributes.
 - `wait`: insert silence for the given seconds. (or default). This tag should be self closing.
