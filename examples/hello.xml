@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<playbook class_name="CodingScene" w="1920" h="1080">
+
+<scene>
+	<tts>
+	Hi guys. This video is a demonstration of python module VideoMachine by overengineer.
+	</tts>
+	
+	
+	<code>
+	#!/usr/bin/python3
+	print('Hello World!')
+	</code>
+	
+	
+	<wait sec="0.5"/>
+	<tts >
+	This program can be used.
+	</tts>
+		<tts lines="1">
+	to generate.
+	</tts>
+		<tts lines="2">
+	coding tutorials.
+	</tts>
+	
+	<wait sec="0.5"/>
+	
+	<tts>
+	This is a work in progress. Watch for updates.
+	</tts>
+	
+	<wait sec="0.5"/>
+</scene>
+
+
+
+
