@@ -1,7 +1,20 @@
 # VideoMachine
 
 Generate videos from simple XML playbooks.
-![](docs/hello.png)
+```xml
+<?xml version="1.0" encoding="utf-8"?>
+<playbook class_name="CodingScene" w="1920" h="1080">
+<scene>
+	<code>
+	#!/usr/bin/python3
+	print('Hello World!')
+	</code>
+	<tts>
+	This line prints "Hello World!" to console.
+	</tts>
+	<wait sec="0.5"/>
+</scene>
+```
 
 This project uses moviepy module. This is a work in progress. Intended to be an extensible library/framework-like thing. 
 Now only generates silly TTS coding tutorials.
